@@ -32,9 +32,7 @@ export function Navbar() {
           <a href="#testimonials" className="text-sm text-muted-foreground hover:text-foreground transition">Reviews</a>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="ghost" className="hidden md:inline-flex" asChild>
-            <Link to="/login">Admin</Link>
-          </Button>
+
           <Button asChild className="gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant">
             <Link to="/builder">Create Resume</Link>
           </Button>

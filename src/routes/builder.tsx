@@ -129,28 +129,28 @@ function BuilderPage() {
     <div className="min-h-screen bg-secondary/40">
       {/* Header */}
       <header className="sticky top-0 z-40 glass border-b border-border/60">
-        <div className="flex h-14 items-center justify-between px-4">
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" size="sm" asChild>
-              <Link to="/"><ChevronLeft className="mr-1 h-4 w-4" />Back</Link>
+        <div className="flex h-14 items-center justify-between gap-1 px-3 sm:px-4">
+          <div className="flex items-center gap-1 sm:gap-3">
+            <Button variant="ghost" size="sm" asChild className="shrink-0">
+              <Link to="/"><ChevronLeft className="mr-0.5 h-4 w-4 sm:mr-1" /><span className="hidden sm:inline">Back</span></Link>
             </Button>
             <div className="hidden items-center gap-2 sm:flex">
-              <div className="text-sm font-medium">{data.fullName || "Untitled resume"}</div>
-              <span className="text-xs text-muted-foreground">· auto-saved</span>
+              <div className="text-sm font-medium truncate max-w-[120px] md:max-w-[200px]">{data.fullName || "Untitled resume"}</div>
+              <span className="text-xs text-muted-foreground shrink-0">· auto-saved</span>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             <div className="hidden items-center gap-2 md:flex">
               <Gauge className="h-4 w-4 text-accent" />
               <span className="text-xs font-medium">Score</span>
               <div className="w-28"><Progress value={progress} /></div>
               <span className="text-xs font-semibold">{progress}</span>
             </div>
-            <Button variant="ghost" size="icon" onClick={() => setDark(d => !d)} aria-label="Toggle theme">
+            <Button variant="ghost" size="icon" onClick={() => setDark(d => !d)} aria-label="Toggle theme" className="shrink-0">
               {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
-            <Button variant="outline" size="sm" onClick={() => setAiOpen(true)}>
-              <Wand2 className="mr-1.5 h-4 w-4" /> AI assist
+            <Button variant="outline" size="sm" onClick={() => setAiOpen(true)} className="shrink-0">
+              <Wand2 className="h-4 w-4 sm:mr-1.5" /><span className="hidden sm:inline">AI assist</span>
             </Button>
             <Button size="sm" onClick={async () => {
               if (!data.photo) { toast.error("Profile photo is required"); setActive("personal"); return; }
@@ -171,11 +171,11 @@ function BuilderPage() {
               } catch (e: any) {
                 toast.error(e.message || "Failed to save resume");
               }
-            }} className="gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant">
-              <Download className="mr-1.5 h-4 w-4" /> Generate & Download
+            }} className="gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant shrink-0">
+              <Download className="h-4 w-4 sm:mr-1.5" /><span className="hidden sm:inline">Generate &amp; Download</span>
             </Button>
             {user && (
-              <Button variant="ghost" size="icon" aria-label="Sign out" onClick={() => { signOut(); toast.success("Signed out"); navigate({ to: "/" }); }}>
+              <Button variant="ghost" size="icon" aria-label="Sign out" onClick={() => { signOut(); toast.success("Signed out"); navigate({ to: "/" }); }} className="shrink-0">
                 <LogOut className="h-4 w-4" />
               </Button>
             )}
@@ -183,29 +183,29 @@ function BuilderPage() {
         </div>
       </header>
 
-      <div className="grid gap-4 p-4 lg:grid-cols-[220px_1fr_minmax(420px,1fr)]">
-        {/* Sidebar */}
-        <aside className="rounded-2xl border border-border/60 bg-card p-3 shadow-soft lg:sticky lg:top-[72px] lg:h-[calc(100vh-88px)]">
-          <div className="px-2 pb-2 pt-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Sections</div>
-          <nav className="space-y-0.5">
+      <div className="grid gap-4 p-3 sm:p-4 lg:grid-cols-[220px_1fr_minmax(420px,1fr)]">
+        {/* Sidebar — tab bar on mobile, vertical nav on desktop */}
+        <aside className="lg:rounded-2xl lg:border lg:border-border/60 lg:bg-card lg:p-3 lg:shadow-soft lg:sticky lg:top-[72px] lg:h-[calc(100vh-88px)]">
+          <div className="hidden lg:block px-2 pb-2 pt-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Sections</div>
+          <nav className="flex gap-1 overflow-x-auto pb-1 lg:flex-col lg:space-y-0.5 lg:pb-0">
             {sections.map(s => (
               <button
                 key={s.id}
                 onClick={() => setActive(s.id)}
-                className={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition ${
+                className={`flex shrink-0 items-center gap-2 rounded-lg px-2.5 py-2 text-sm transition lg:w-full ${
                   active === s.id
                     ? "bg-primary/10 text-primary font-medium"
                     : "text-muted-foreground hover:bg-secondary hover:text-foreground"
                 }`}
               >
-                <s.icon className="h-4 w-4" />
-                {s.label}
+                <s.icon className="h-4 w-4 shrink-0" />
+                <span className="hidden lg:inline">{s.label}</span>
               </button>
             ))}
           </nav>
 
-          <div className="mt-5 px-2 pb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Theme</div>
-          <div className="grid grid-cols-2 gap-1.5 px-1">
+          <div className="hidden lg:block mt-5 px-2 pb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Theme</div>
+          <div className="hidden lg:grid grid-cols-2 gap-1.5 px-1">
             {themes.map(t => (
               <button
                 key={t.id}
@@ -219,10 +219,10 @@ function BuilderPage() {
             ))}
           </div>
 
-          <div className="mt-4 px-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+          <div className="hidden lg:block mt-4 px-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
             <span className="inline-flex items-center gap-1.5"><Palette className="h-3 w-3" /> Accent</span>
           </div>
-          <div className="mt-1.5 flex flex-wrap gap-1.5 px-1">
+          <div className="hidden lg:flex flex-wrap gap-1.5 mt-1.5 px-1">
             {accentSwatches.map(c => (
               <button
                 key={c}
@@ -242,7 +242,7 @@ function BuilderPage() {
         </aside>
 
         {/* Form */}
-        <section className="rounded-2xl border border-border/60 bg-card p-6 shadow-soft">
+        <section className="rounded-2xl border border-border/60 bg-card p-4 sm:p-6 shadow-soft">
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -263,9 +263,9 @@ function BuilderPage() {
           </AnimatePresence>
         </section>
 
-        {/* Preview */}
+        {/* Preview — toggleable on mobile */}
         <section className="rounded-2xl border border-border/60 bg-secondary/60 p-4 shadow-soft lg:sticky lg:top-[72px] lg:h-[calc(100vh-88px)] lg:overflow-auto">
-          <div className="mb-3 flex items-center px-1">
+          <div className="mb-3 flex items-center justify-between px-1">
             <div className="text-xs font-medium text-muted-foreground">Live preview · A4</div>
           </div>
           <ResumePreview data={data} theme={theme} accent={accent} />
