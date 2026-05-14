@@ -2,6 +2,5 @@ node_modules
 .output
 .wrangler
 dist
-.env
 .env.local
 /supabase
